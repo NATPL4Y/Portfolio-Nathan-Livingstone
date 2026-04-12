@@ -12,9 +12,10 @@ function createNav(activePage) {
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html" class="${activePage === 'accueil' ? 'active' : ''}">Accueil</a></li>
         <li>
-          <a href="#" class="dropdown-trigger ${['but1','but2','but3'].includes(activePage) ? 'active' : ''}">BUT TC</a>
+          <a href="but-tc.html" class="dropdown-trigger ${['but-tc','but1','but2','but3'].includes(activePage) ? 'active' : ''}">BUT TC</a>
           <div class="dropdown">
-            <div class="dropdown-label">Année 1</div>
+            <a href="but-tc.html" style="color:var(--gold);font-weight:500">Vue d'ensemble</a>
+            <div class="dropdown-label" style="margin-top:.4rem">Année 1</div>
             <a href="but1.html">BUT 1 — Tronc commun</a>
             <a href="but1-stage.html" style="padding-left:1.8rem;font-size:.78rem;opacity:.7">↳ Stage — SEMLORE</a>
             <div class="dropdown-label" style="margin-top:.5rem">Année 2</div>
@@ -25,8 +26,10 @@ function createNav(activePage) {
           </div>
         </li>
         <li>
-          <a href="#" class="dropdown-trigger ${['hard','mad','soft'].includes(activePage) ? 'active' : ''}">Skills</a>
+          <a href="skills.html" class="dropdown-trigger ${['skills','hard','mad','soft'].includes(activePage) ? 'active' : ''}">Skills</a>
           <div class="dropdown">
+            <a href="skills.html" style="color:var(--gold);font-weight:500">Vue d'ensemble</a>
+            <div class="dropdown-label" style="margin-top:.4rem">Compétences</div>
             <a href="hard-skills.html">Hard Skills</a>
             <a href="soft-skills.html">Soft Skills</a>
             <a href="mad-skills.html">Mad Skills</a>
@@ -41,12 +44,10 @@ function createNav(activePage) {
   `;
   document.body.prepend(nav);
 
-  // Hamburger toggle
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('open');
-    // Animate hamburger to X
     const spans = hamburger.querySelectorAll('span');
     if (navLinks.classList.contains('open')) {
       spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -59,21 +60,19 @@ function createNav(activePage) {
     }
   });
 
-  // Mobile dropdown toggles
+  // Mobile: toggle dropdown. Desktop: follow href.
   document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
     trigger.addEventListener('click', (e) => {
-      e.preventDefault();
       if (window.innerWidth <= 768) {
+        e.preventDefault();
         const dropdown = trigger.nextElementSibling;
         const isOpen = dropdown.style.display === 'block';
-        // Close all dropdowns first
         document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
         dropdown.style.display = isOpen ? 'none' : 'block';
       }
     });
   });
 
-  // Close mobile nav on link click
   document.querySelectorAll('.nav-links a:not(.dropdown-trigger)').forEach(link => {
     link.addEventListener('click', () => {
       if (window.innerWidth <= 768) {
@@ -95,8 +94,8 @@ function createFooter() {
       <p>&copy; ${new Date().getFullYear()} Nathan Livingstone — Portfolio BUT TC</p>
       <ul class="footer-links">
         <li><a href="index.html">Accueil</a></li>
-        <li><a href="but1.html">BUT</a></li>
-        <li><a href="hard-skills.html">Skills</a></li>
+        <li><a href="but-tc.html">BUT TC</a></li>
+        <li><a href="skills.html">Skills</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
@@ -116,7 +115,6 @@ function initScrollReveal() {
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 }
 
-// Smooth nav background on scroll
 function initNavScroll() {
   const nav = document.querySelector('.nav');
   if (!nav) return;

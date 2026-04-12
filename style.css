@@ -147,3 +147,128 @@ p{font-size:1rem;color:var(--dark-gray);max-width:680px;line-height:1.75}
 @media(min-width:1400px){.section{max-width:1360px}.hero-content{max-width:940px}.card-grid{grid-template-columns:repeat(3,1fr)}}
 /* Print */
 @media print{.nav,.footer,.hero-scroll-indicator,.hero-cta{display:none}.hero{min-height:auto;padding:3rem 2rem}.card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}body::after{display:none}}
+
+/* ============================================
+   PHOTO FRAMES
+   ============================================ */
+.photo-frame{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:linear-gradient(135deg,var(--navy-50),var(--cream));border:1px solid var(--light-gray)}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.photo-frame:hover img{transform:scale(1.03)}
+.photo-frame-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;color:var(--gray);font-size:.8rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;width:100%;height:100%;min-height:260px}
+.photo-frame-placeholder svg{opacity:.35;color:var(--navy-400)}
+.photo-frame-placeholder span{opacity:.5}
+.photo-frame.portrait{aspect-ratio:3/4}
+.photo-frame.landscape{aspect-ratio:16/9}
+.photo-frame.square{aspect-ratio:1}
+/* Gold corner accent */
+.photo-frame::after{content:'';position:absolute;bottom:1rem;right:1rem;width:40px;height:40px;border-bottom:2px solid rgba(184,150,78,.4);border-right:2px solid rgba(184,150,78,.4);border-radius:0 0 var(--radius-sm) 0;pointer-events:none}
+.photo-frame::before{content:'';position:absolute;top:1rem;left:1rem;width:40px;height:40px;border-top:2px solid rgba(184,150,78,.4);border-left:2px solid rgba(184,150,78,.4);border-radius:var(--radius-sm) 0 0 0;pointer-events:none;z-index:1}
+
+/* ============================================
+   DESIGN GLOBAL — AMÉLIORATIONS
+   ============================================ */
+
+/* Cards — accent left bar on hover */
+.card{border-left:3px solid transparent;transition:var(--transition),border-color .3s}
+.card:hover{border-left-color:var(--gold-pale)}
+
+/* UE blocks — left accent */
+.ue-block{border-left:3px solid transparent;transition:var(--transition),border-left-color .3s}
+.ue-block:hover{border-left-color:var(--gold-pale)}
+
+/* Section divider ornement */
+.section-divider{display:flex;align-items:center;gap:1.5rem;margin:5rem auto;max-width:320px}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--light-gray))}
+.section-divider::before{background:linear-gradient(90deg,transparent,var(--light-gray))}
+.section-divider::after{background:linear-gradient(90deg,var(--light-gray),transparent)}
+.section-divider-diamond{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);flex-shrink:0;opacity:.6}
+
+/* Hero photo split layout */
+.hero-split{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4rem;text-align:left;max-width:1000px}
+.hero-split .hero-photo{width:260px;flex-shrink:0}
+.hero-split .hero-photo .photo-frame{border:2px solid rgba(184,150,78,.25);box-shadow:0 0 60px rgba(184,150,78,.12)}
+
+/* About section with photo */
+.about-grid{display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start;margin-bottom:4rem}
+.about-photo .photo-frame{height:380px}
+.about-text h2{margin-bottom:1.2rem}
+.about-text p{margin-bottom:1rem}
+
+/* Stage photo layout */
+.stage-layout{display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:start}
+.stage-layout .photo-frame{height:280px}
+
+/* Skill card icon — larger */
+.skill-card-icon{width:60px;height:60px;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--navy-50),var(--gold-pale));display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;transition:var(--transition)}
+.card:hover .skill-card-icon{background:linear-gradient(135deg,var(--gold-pale),var(--gold-pale));box-shadow:0 4px 16px rgba(184,150,78,.15)}
+
+/* Page header — subtle bottom border */
+.page-header{border-bottom:1px solid rgba(255,255,255,.04)}
+
+/* Eyebrow lines on non-section contexts */
+.eyebrow-line{display:inline-flex;align-items:center;gap:.8rem;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--gold)}
+.eyebrow-line::before{content:'';width:32px;height:1px;background:var(--gold);opacity:.4}
+
+/* Responsive adjustments */
+@media(max-width:900px){
+  .hero-split{grid-template-columns:1fr;text-align:center}
+  .hero-split .hero-photo{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .about-photo{display:none}
+  .stage-layout{grid-template-columns:1fr}
+  .stage-layout .photo-frame{height:220px;order:-1}
+}
+
+/* ============================================
+   GRILLE 2 COLONNES — SYMÉTRIE PARFAITE
+   ============================================ */
+.card-grid-2{grid-template-columns:repeat(2,1fr)}
+
+/* Dernier élément seul dans une rangée de 2 → pleine largeur */
+.card-grid-2>.card:last-child:nth-child(odd){grid-column:1/-1}
+
+/* Dernier élément seul dans une rangée de 3 → centré sur 2 colonnes */
+.card-grid>.card:last-child:nth-child(3n+1){grid-column:2/3}
+
+@media(max-width:768px){
+  .card-grid-2{grid-template-columns:1fr}
+  .card-grid-2>.card:last-child:nth-child(odd){grid-column:1}
+  .card-grid>.card:last-child:nth-child(3n+1){grid-column:1}
+}
+
+/* ============================================
+   AC GRID — PAGES UE REDESIGN
+   ============================================ */
+.ue-content{max-width:1240px}
+.ac-section-title{font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--navy-900);margin:3rem 0 1.8rem;padding-bottom:1.2rem;border-bottom:1px solid var(--light-gray)}
+.ac-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-bottom:3rem}
+.ac-card{background:var(--white);border-radius:var(--radius-lg);padding:2.5rem;border:1px solid rgba(0,0,0,.05);transition:var(--transition);display:flex;flex-direction:column;border-left:3px solid transparent}
+.ac-card:hover{box-shadow:var(--shadow-md);border-left-color:var(--gold-pale);transform:translateY(-3px)}
+.ac-num{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem}
+.ac-num::after{content:'';width:30px;height:1px;background:var(--gold-pale)}
+.ac-card h3{font-family:var(--font-body);font-size:.93rem;font-weight:600;color:var(--navy-700);margin-bottom:.9rem;line-height:1.55}
+.ac-card>p{font-size:.9rem;color:var(--dark-gray);line-height:1.8;flex:1;margin-bottom:1.2rem}
+.ac-doc{display:inline-flex;align-items:center;gap:.5rem;margin-top:auto;padding:.5rem 1.1rem;background:var(--navy-50);border:1px solid var(--navy-100);border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;color:var(--navy-600);transition:var(--transition);align-self:flex-start}
+.ac-doc:hover{background:var(--gold-pale);border-color:rgba(184,150,78,.3);color:var(--navy-800)}
+.ac-grid>.ac-card:last-child:nth-child(odd){grid-column:1/-1}
+@media(max-width:768px){.ac-grid{grid-template-columns:1fr}.ac-grid>.ac-card:last-child:nth-child(odd){grid-column:1}}
+
+/* ============================================
+   PHOTO INTÉGRÉE — SANS ESPACE VIDE
+   Avatar héro, bannière, carte photo
+   ============================================ */
+
+/* Avatar circulaire dans le héro */
+.hero-avatar{width:100px;height:100px;border-radius:50%;overflow:hidden;margin:0 auto 2rem;border:2px solid rgba(184,150,78,.35);box-shadow:0 0 50px rgba(184,150,78,.12)}
+.hero-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Bannière photo landscape (BUT 3, stage) */
+.photo-banner{border-radius:var(--radius-lg);overflow:hidden;margin-bottom:3rem;position:relative;height:280px}
+.photo-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.photo-banner:hover img{transform:scale(1.03)}
+.photo-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(7,13,26,.25),transparent 60%);pointer-events:none}
+
+/* Photo en haut d'une card (mad-skills) */
+.card-photo{width:100%;height:160px;border-radius:var(--radius-md);overflow:hidden;margin-bottom:1.4rem}
+.card-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
+.card:hover .card-photo img{transform:scale(1.06)}

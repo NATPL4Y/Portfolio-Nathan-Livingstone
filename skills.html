@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills | Nathan Livingstone</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Stats strip repris de but-tc */
+    .stats-strip{background:var(--navy-900);border-radius:var(--radius-xl);padding:3rem 3.5rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin:0 0 5rem;position:relative;overflow:hidden}
+    .stats-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(184,150,78,.07),transparent);pointer-events:none}
+    .stat-item{text-align:center;position:relative}
+    .stat-item:not(:last-child)::after{content:'';position:absolute;right:0;top:15%;bottom:15%;width:1px;background:rgba(255,255,255,.08)}
+    .stat-num{font-family:var(--font-display);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;color:var(--gold);line-height:1;margin-bottom:.4rem}
+    .stat-label{font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--navy-300)}
+
+    /* Skill overview cards */
+    .skill-overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;margin-top:2rem}
+    .skill-ov-card{background:var(--white);border-radius:var(--radius-xl);padding:3rem 2.5rem;border:1px solid rgba(0,0,0,.05);position:relative;overflow:hidden;transition:var(--transition);display:flex;flex-direction:column}
+    .skill-ov-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold-pale),transparent);opacity:0;transition:var(--transition)}
+    .skill-ov-card:hover{box-shadow:var(--shadow-xl);transform:translateY(-6px)}
+    .skill-ov-card:hover::before{opacity:1}
+    .sk-icon{width:64px;height:64px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;margin-bottom:1.8rem;transition:var(--transition)}
+    .sk-icon-hard{background:linear-gradient(135deg,var(--navy-50),#dce8f5)}
+    .sk-icon-soft{background:linear-gradient(135deg,var(--navy-50),var(--gold-pale))}
+    .sk-icon-mad{background:linear-gradient(135deg,var(--navy-50),#e8f0e8)}
+    .skill-ov-card:hover .sk-icon{box-shadow:0 8px 24px rgba(184,150,78,.15)}
+    .sk-title{font-family:var(--font-display);font-size:1.9rem;font-weight:500;color:var(--navy-900);margin-bottom:.5rem}
+    .sk-sub{font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:1.2rem}
+    .sk-desc{font-size:.92rem;color:var(--gray);line-height:1.75;flex:1;margin-bottom:1.8rem}
+    .sk-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.8rem}
+    .sk-tag{padding:.22rem .7rem;background:var(--navy-50);color:var(--navy-600);font-size:.68rem;font-weight:600;border-radius:50px;letter-spacing:.04em;text-transform:uppercase}
+    .sk-link{display:inline-flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:var(--navy-600);text-transform:uppercase;letter-spacing:.05em;margin-top:auto;transition:var(--transition)}
+    .sk-link:hover{color:var(--gold)}
+    .sk-link svg{width:13px;height:13px;transition:var(--transition)}
+    .sk-link:hover svg{transform:translateX(4px)}
+
+    /* Philosophy block */
+    .philosophy{background:var(--navy-900);border-radius:var(--radius-xl);padding:4rem;margin-top:5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;overflow:hidden}
+    .philosophy::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 20% 80%,rgba(184,150,78,.06),transparent),radial-gradient(ellipse 50% 50% at 80% 20%,rgba(39,70,114,.15),transparent);pointer-events:none}
+    .philosophy-text{position:relative}
+    .philosophy-text h2{color:var(--white);margin-bottom:1.2rem}
+    .philosophy-text p{color:var(--navy-300);line-height:1.85;max-width:100%}
+    .philosophy-photo{position:relative}
+    .philosophy-photo .photo-frame{height:320px}
+
+    /* Photo placeholder label */
+    .photo-name{position:absolute;bottom:-1.8rem;left:0;right:0;text-align:center;font-size:.68rem;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-family:var(--font-body)}
+
+    @media(max-width:900px){
+      .skill-overview-grid{grid-template-columns:1fr}
+      .philosophy{grid-template-columns:1fr}
+      .philosophy-photo{display:none}
+      .stats-strip{grid-template-columns:repeat(2,1fr)}
+      .stat-item:nth-child(2)::after,.stat-item:nth-child(4)::after{display:none}
+    }
+    @media(max-width:600px){
+      .stats-strip{padding:2rem 1.5rem;border-radius:var(--radius-lg)}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <span class="eyebrow">Compétences</span>
+    <h1>Mes Skills</h1>
+    <p>Hard, Soft & Mad Skills — le triptyque qui compose mon profil professionnel</p>
+  </div>
+
+  <div class="breadcrumbs">
+    <a href="index.html">Accueil</a>
+    <span class="separator">›</span>
+    <span>Skills</span>
+  </div>
+
+  <section class="section">
+
+    <!-- Stats strip -->
+    <div class="stats-strip fade-in">
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Catégories de skills</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20<span style="font-size:1.5rem">+</span></div>
+        <div class="stat-label">Compétences listées</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Années de pratique</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">B2<span style="font-size:1.2rem">+</span></div>
+        <div class="stat-label">Niveau d'anglais</div>
+      </div>
+    </div>
+
+    <!-- Section header -->
+    <div class="section-header fade-in">
+      <span class="eyebrow">Vue d'ensemble</span>
+      <h2>Trois dimensions, un profil</h2>
+      <p>Chaque catégorie de compétences reflète une facette complémentaire de mon profil — du savoir-faire technique à l'intelligence relationnelle, en passant par ce qui me rend unique.</p>
+    </div>
+
+    <!-- Cards overview -->
+    <div class="skill-overview-grid">
+
+      <div class="skill-ov-card fade-in stagger-1">
+        <div class="sk-icon sk-icon-hard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--navy-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="sk-title">Hard Skills</div>
+        <div class="sk-sub">Savoir-faire techniques</div>
+        <p class="sk-desc">Les compétences techniques et opérationnelles acquises au fil de ma formation et de mes expériences — marketing, digital, vente, outils et langues.</p>
+        <div class="sk-tags">
+          <span class="sk-tag">Marketing digital</span>
+          <span class="sk-tag">SEO / SEA</span>
+          <span class="sk-tag">Google Analytics</span>
+          <span class="sk-tag">Négociation</span>
+          <span class="sk-tag">Anglais B2+</span>
+        </div>
+        <a href="hard-skills.html" class="sk-link">
+          Voir les hard skills
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="skill-ov-card fade-in stagger-2">
+        <div class="sk-icon sk-icon-soft">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--navy-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="sk-title">Soft Skills</div>
+        <div class="sk-sub">Intelligence relationnelle</div>
+        <p class="sk-desc">Les qualités humaines et comportementales qui font la différence au quotidien — communication, organisation, leadership et adaptabilité.</p>
+        <div class="sk-tags">
+          <span class="sk-tag">Écoute active</span>
+          <span class="sk-tag">Rigueur</span>
+          <span class="sk-tag">Autonomie</span>
+          <span class="sk-tag">Esprit d'équipe</span>
+          <span class="sk-tag">Persévérance</span>
+        </div>
+        <a href="soft-skills.html" class="sk-link">
+          Voir les soft skills
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="skill-ov-card fade-in stagger-3">
+        <div class="sk-icon sk-icon-mad">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--navy-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="sk-title">Mad Skills</div>
+        <div class="sk-sub">Ce qui me rend unique</div>
+        <p class="sk-desc">Les compétences atypiques et expériences singulières qui révèlent une personnalité différenciante — compétition, engagement civique et ouverture internationale.</p>
+        <div class="sk-tags">
+          <span class="sk-tag">Finaliste Négociales</span>
+          <span class="sk-tag">Service Civique</span>
+          <span class="sk-tag">Immersion Angleterre</span>
+        </div>
+        <a href="mad-skills.html" class="sk-link">
+          Voir les mad skills
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Philosophy / photo block -->
+    <div class="philosophy fade-in">
+      <div class="philosophy-text">
+        <span class="eyebrow" style="font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--gold);display:inline-block;margin-bottom:1rem">Ma philosophie</span>
+        <h2>Des compétences au service d'un projet</h2>
+        <p>Chaque compétence que j'ai développée s'inscrit dans une trajectoire claire : devenir conseiller en gestion de patrimoine. La rigueur analytique des hard skills, la qualité relationnelle des soft skills, et l'énergie compétitive des mad skills forment un profil cohérent orienté conseil et accompagnement client.</p>
+      </div>
+      <div class="philosophy-photo" style="position:relative">
+        <!-- =============================================
+             PHOTO : enregistre ton image sous le nom
+             photo-skills.jpg dans le dossier du site
+             ============================================= -->
+        <div class="photo-frame landscape">
+          <img src="photo-skills.jpg" alt="Photo skills" onerror="this.parentElement.innerHTML='<div class=\'photo-frame-placeholder\'><svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect width=\'18\' height=\'18\' x=\'3\' y=\'3\' rx=\'2\'/><circle cx=\'9\' cy=\'9\' r=\'2\'/><path d=\'m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\'/></svg><span>photo-skills.jpg</span></div>'">
+        </div>
+        <div class="photo-name">photo-skills.jpg</div>
+      </div>
+    </div>
+
+  </section>
+
+  <script src="nav.js"></script>
+  <script>
+    createNav('skills');
+    createFooter();
+  </script>
+</body>
+</html>

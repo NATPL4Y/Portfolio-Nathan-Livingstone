@@ -11,6 +11,7 @@ function createNav(activePage) {
       <a href="index.html" class="nav-logo">N<span>.</span> Livingstone</a>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html" class="${activePage === 'accueil' ? 'active' : ''}">Accueil</a></li>
+        <li><a href="profil.html" class="${activePage === 'profil' ? 'active' : ''}">Profil</a></li>
         <li>
           <a href="but-tc.html" class="dropdown-trigger ${['but-tc','but1','but2','but3'].includes(activePage) ? 'active' : ''}">BUT TC</a>
           <div class="dropdown">
@@ -37,27 +38,55 @@ function createNav(activePage) {
         </li>
         <li><a href="contact.html" class="${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
       </ul>
-      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <button class="nav-hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   `;
   document.body.prepend(nav);
 
+  // Overlay mobile
+  const overlay = document.createElement('div');
+  overlay.className = 'nav-overlay';
+  overlay.id = 'navOverlay';
+  document.body.appendChild(overlay);
+
   const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
+  const navLinks  = document.getElementById('navLinks');
+
+  function openMenu() {
+    navLinks.classList.add('open');
+    overlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
     const spans = hamburger.querySelectorAll('span');
-    if (navLinks.classList.contains('open')) {
-      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-      spans[1].style.opacity = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-    } else {
-      spans[0].style.transform = 'none';
-      spans[1].style.opacity = '1';
-      spans[2].style.transform = 'none';
-    }
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity  = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  }
+
+  function closeMenu() {
+    navLinks.classList.remove('open');
+    overlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+    const spans = hamburger.querySelectorAll('span');
+    spans[0].style.transform = 'none';
+    spans[1].style.opacity  = '1';
+    spans[2].style.transform = 'none';
+    document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+  }
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.contains('open') ? closeMenu() : openMenu();
+  });
+
+  // Fermer sur clic overlay
+  overlay.addEventListener('click', closeMenu);
+
+  // Fermer avec Échap
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMenu();
   });
 
   // Mobile: toggle dropdown. Desktop: follow href.
@@ -69,19 +98,15 @@ function createNav(activePage) {
         const isOpen = dropdown.style.display === 'block';
         document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
         dropdown.style.display = isOpen ? 'none' : 'block';
+        trigger.parentElement.classList.toggle('open', !isOpen);
       }
     });
   });
 
+  // Fermer le menu quand on clique un lien (mobile)
   document.querySelectorAll('.nav-links a:not(.dropdown-trigger)').forEach(link => {
     link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        navLinks.classList.remove('open');
-        const spans = hamburger.querySelectorAll('span');
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
-      }
+      if (window.innerWidth <= 768) closeMenu();
     });
   });
 }
@@ -94,6 +119,7 @@ function createFooter() {
       <p>&copy; ${new Date().getFullYear()} Nathan Livingstone — Portfolio BUT TC</p>
       <ul class="footer-links">
         <li><a href="index.html">Accueil</a></li>
+        <li><a href="profil.html">Profil</a></li>
         <li><a href="but-tc.html">BUT TC</a></li>
         <li><a href="skills.html">Skills</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -101,6 +127,18 @@ function createFooter() {
     </div>
   `;
   document.body.appendChild(footer);
+
+  // Scroll-to-top button
+  const scrollBtn = document.createElement('button');
+  scrollBtn.className = 'scroll-top';
+  scrollBtn.setAttribute('aria-label', 'Retour en haut');
+  scrollBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>`;
+  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.body.appendChild(scrollBtn);
+
+  window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
 }
 
 function initScrollReveal() {
